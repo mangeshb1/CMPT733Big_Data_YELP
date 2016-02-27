@@ -1,0 +1,111 @@
+\documentclass[twoside]{article}
+\usepackage{indentfirst}
+
+
+
+% ------
+% Fonts and typesetting settings
+\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\linespread{1.05} % Palatino needs more space between lines
+\usepackage{microtype}
+
+% ------
+% Page layout
+\usepackage[hmarginratio=1:1,top=20mm,columnsep=22pt, left=0.5in, right=0.5in, bottom=22mm]{geometry}
+\usepackage[font=it]{caption}
+\usepackage{paralist}
+\usepackage{multicol}
+\usepackage{multicol,lipsum,graphicx,float}
+
+% ------
+% Lettrines
+\usepackage{lettrine}
+
+
+% ------
+% Abstract
+\usepackage{abstract}
+	\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+	%\renewcommand{\abstracttextfont}{\normalfont\small\itshape}
+
+
+% ------
+% Titling (section/subsection)
+\usepackage{titlesec}
+\renewcommand\thesection{\arabic{section}}
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}
+%\titleformat{\subsection}[block]{\large\scshape\centering}{\thesubsection}}{}{}
+\titleformat{\subsection}{\normalfont}{\thesubsection}{1em}{}
+
+\setcounter{secnumdepth}{2} 
+
+
+% ------
+% Header/footer
+\usepackage{fancyhdr}
+	\renewcommand{\thefootnote}{\arabic{footnote}}
+	\pagestyle{fancy}
+	\fancyhead{}
+	\fancyfoot{}
+	\fancyhead[C]{CMPT733 $\bullet$ Project Paper $\bullet$ Sunday April 10 2016}
+	\fancyfoot[RO,LE]{\thepage}
+
+
+% ------
+% Clickable URLs (optional)
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+% ------
+% Maketitle metadata
+\title{\vspace{-15mm}%
+	\fontsize{24pt}{10pt}\selectfont
+	\textbf{Title}
+	}	
+\author{%
+	\large
+	\textsc{Mangesh Bhangare}\\
+	\textsc{Saif Charaniya}\\
+	\textsc{Jay Pratap Naidu}\\
+	\vspace{-5mm}
+	}
+\date{}
+
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\belowcaptionskip}{3pt} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{multicols*}{2}
+
+\section{Introduction}
+
+\section{Literature Review and Inspiration}
+
+\section{Data Collection and ETL}
+
+\section{Further Areas of Study}
+
+\section{Conclusion}
+
+\section{References}
+
+\begingroup
+\renewcommand{\section}[2]{}%
+\bibliographystyle{plain}
+\bibliography{ref}
+\endgroup
+
+\end{multicols*}
+
+\end{document}
