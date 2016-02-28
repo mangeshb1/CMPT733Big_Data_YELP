@@ -1,0 +1,20 @@
+## All Violations For Boston
+https://drivendata.s3.amazonaws.com/data/5/public/AllViolations.csv
+
+## restaurant id to yelp id for Boston
+https://drivendata.s3.amazonaws.com/data/5/public/restaurant_ids_to_yelp_ids.csv
+
+##Dataset from Yelp for Boston
+https://www.yelp.com/dataset_challenge/drivendata
+
+## All Violations For Las Vegas
+http://www.southernnevadahealthdistrict.org/restaurants/download/restaurants.zip
+
+## All Violations For Las Vegas Table definitions
+http://www.southernnevadahealthdistrict.org/restaurants/download/restaurants.sql.txt
+
+## Yelp Dataset Whole 
+https://www.yelp.ca/dataset_challenge
+
+
+
