@@ -1,5 +1,3 @@
-Final Project: Initial Plan
-
 Ratatouille: What’s Actually Cooking in the Kitchen
 We look to create a classification model that can predict when a restaurant should be inspected by health officials based on combining historical inspection schedules with Yelp reviews and ratings for restaurants in the cities of Boston (MA) and Las Vegas (NV).
 
