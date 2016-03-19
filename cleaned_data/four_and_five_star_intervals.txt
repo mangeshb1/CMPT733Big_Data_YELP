@@ -1,0 +1,33 @@
+Four and Five star interval python code.  Higher stars are better.
+To be used in boston and lv datasets
+
+Four star intervals:
+
+def four_scale(v):
+    '''Return four scale rank: between 1-4'''
+
+    if (v < 1.456895):
+        return 4
+    elif ( v < 1.994475):
+        return 3
+    elif (v < 2.990196):
+        return 2
+    else:
+        return 1
+
+
+five star intervals:
+
+     def five_scale(v):
+    '''Return five scale rank: between 1-5'''
+
+    if (v < 1.354112):
+        return 5
+    elif (v < 1.749172):
+        return 4
+    elif (v < 2.184831):
+        return 3
+    elif (v < 3.434874):
+        return 2
+    else:
+        return 1
