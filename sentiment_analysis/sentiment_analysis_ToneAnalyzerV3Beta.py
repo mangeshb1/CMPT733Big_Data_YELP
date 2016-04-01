@@ -6,18 +6,30 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import udf
 from pyspark import SparkContext,SparkConf
 
-
+conf = SparkConf().setAppName("IBM Watson Sentimemnt Analysis")
+sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
-dfIP = sqlContext.read.json("/home/ub51/SFU/733Project/Data/yelp_academic_dataset_review.json").cache()
-dfIP.registerTempTable("dfIP")
+#dfIP = sqlContext.read.json("/home/ub51/SFU/733Project/Data/yelp_academic_dataset_review.json").cache()
+dfIP_loc = "../lv_data/lv_ibm_short/lv_ibm_input.csv"
+dfIP = sqlContext.read.format('com.databricks.spark.csv')\
+     .options(header='true', inferschema='true').load(dfIP_loc)
 
-print dfIP.count()
-dfIPFilter = sqlContext.sql("select * from dfIP where votes.useful > 70")
-print dfIPFilter.count()
+dfIP.printSchema()
+
+#no need to filter anymore
+#dfIP.registerTempTable("dfIP")
+#print dfIP.count()
+#dfIPFilter = sqlContext.sql("select * from dfIP where votes.useful > 70")
+#print dfIPFilter.count()
 
 
 def getSentiment(s):
+
+    if s is None or len(s) == 0:
+        #no review_text for some reason
+        return [];
+
     tone_analyzer = ToneAnalyzerV3Beta(
     username='1cd1f053-d1a8-44d9-9a1a-04e2c6229eb0',
     password='aj0qwsv4D7uu',
@@ -39,7 +51,9 @@ def getSentiment(s):
         
 udfProtToEncoding=udf(lambda s:getSentiment(s), ArrayType(StringType()))
 
-ans = dfIPFilter.withColumn("Sentiment", udfProtToEncoding(dfIPFilter.text))
-ans.show(3,False)
-#ans.write.parquet("/home/ub51/SFU/733Project/Data/ans.parquet")
+ans = dfIP.withColumn("Sentiment", udfProtToEncoding(dfIP.review_text))
+#ans.show(3,False)
+
+#save 
+ans.write.parquet("sentiment_output.parquet")
 
