@@ -22,8 +22,7 @@ trainLab = trainingData.map(lambda l:LabeledPoint(l.risk_rating,[l.yelp_score,l.
 
 testLab = testData.map(lambda l:LabeledPoint(l.risk_rating,[l.yelp_score,l.sum_anger,l.sum_happy,l.sum_conf,l.sum_disgust,l.no_vio]))
 
-model = GradientBoostedTrees.trainClassifier(trainLab,
-                                             categoricalFeaturesInfo={}, numIterations=3)
+model = NaiveBayes.train(trainLab, 1.0)
 
 print "Model Ready"
 
@@ -35,20 +34,3 @@ finalRdd = testData.map(lambda rec:(rec.yelp_id,rec.yelp_score)).zip(predictions
 
 testErr = labelsAndPredictions.filter(lambda (v, p): v != p).count() / float(testLab.count())
 print('Test Error = ' + str(testErr))
-print('Learned classification forest model:')
-print(model.toDebugString())
-
-#Code for Spark Evaluation Matrix
-
-metrics = MulticlassMetrics(labelsAndPredictions)
-# Overall statistics
-precision = metrics.precision()
-recall = metrics.recall()
-f1Score = metrics.fMeasure()
-confusionMatrx = metrics.confusionMatrix()
-
-print("All Evaluation Measures Stats")
-print("Confusion Matix = %s" % confusionMatrx)
-print("Precision = %s" % precision)
-print("Recall = %s" % recall)
-print("F1 Score = %s" % f1Score)
