@@ -39,8 +39,9 @@ joined_df = joined_df.join(yelp_df, joined_df.yelp_id==yelp_df.business_id)\
             yelp_df.votes.useful.alias("review_usefullness"),\
             yelp_df.review_id)
 
+joined_df = joined_df.dropna(how="any")
 joined_df = joined_df.where(joined_df.review_usefullness>0).cache()
-#print ("DF COUNT HERE!: ", joined_df.count())
+print ("DF COUNT HERE!: ", joined_df.count())
 
 #do i really need this?
 joined_df.registerTempTable("joined_df")
@@ -74,4 +75,5 @@ revs_df = sqlContext.createDataFrame(revs_short, ["rev_id"])
 #revs_df.show()
 
 final_out = revs_df.join(joined_df, revs_df.rev_id==joined_df.review_id)
-final_out.repartition(1).save('lv_ibm_short', 'com.databricks.spark.csv')
+final_out.write.save("ibm_watson_input", format="parquet")
+#final_out.repartition(1).save('lv_ibm_short', 'com.databricks.spark.csv')

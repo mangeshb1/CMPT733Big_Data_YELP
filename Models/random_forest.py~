@@ -3,12 +3,14 @@ from pyspark.mllib.util import MLUtils
 from pyspark.mllib.linalg import SparseVector
 from pyspark.mllib.regression import LabeledPoint
 
-dfModelDataAll = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/ub51/SFU/733Project/Data/model.csv')
-dfModelDataAll.show()
+#dfModelDataAll = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/ub51/SFU/733Project/Data/model.csv')
+#dfModelDataAll.show()
 
 #dfnoID = dfModelDataAll.select('yelp_score','sum_anger','sum_happy','sum_conf','sum_disgust','no_vio','risk_rating')
 
 #dfnoID.show()
+
+
 
 (trainingData1, testData) = dfModelDataAll.randomSplit([0.7, 0.3])
 
