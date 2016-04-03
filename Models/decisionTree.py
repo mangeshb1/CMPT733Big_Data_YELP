@@ -2,6 +2,7 @@
 from pyspark.mllib.tree import DecisionTree, DecisionTreeModel
 from pyspark.mllib.util import MLUtils
 from pyspark.mllib.regression import LabeledPoint
+from pyspark.mllib.evaluation import MulticlassMetrics
 
 dfModelDataAll = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/ub51/SFU/733Project/Data/model.csv')
 dfModelDataAll.show()
@@ -32,8 +33,22 @@ predictions = model.predict(testLab.map(lambda x: x.features))
 labelsAndPredictions = testLab.map(lambda lp: lp.label).zip(predictions)
 
 finalRdd = testData.map(lambda rec:(rec.yelp_id,rec.yelp_score)).zip(predictions) 
-
 testErr = labelsAndPredictions.filter(lambda (v, p): v != p).count() / float(testLab.count())
 print('Test Error = ' + str(testErr))
 print('Learned classification forest model:')
 print(model.toDebugString())
+
+#Code for Spark Evaluation Matrix
+
+metrics = MulticlassMetrics(labelsAndPredictions)
+# Overall statistics
+precision = metrics.precision()
+recall = metrics.recall()
+f1Score = metrics.fMeasure()
+confusionMatrx = metrics.confusionMatrix()
+
+print("All Evaluation Measures Stats")
+print("Confusion Matix = %s" % confusionMatrx)
+print("Precision = %s" % precision)
+print("Recall = %s" % recall)
+print("F1 Score = %s" % f1Score)

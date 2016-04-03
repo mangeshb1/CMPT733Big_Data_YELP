@@ -2,6 +2,7 @@
 from pyspark.mllib.tree import GradientBoostedTrees, GradientBoostedTreesModel
 from pyspark.mllib.util import MLUtils
 from pyspark.mllib.regression import LabeledPoint
+from pyspark.mllib.evaluation import MulticlassMetrics
 
 dfModelDataAll = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/ub51/SFU/733Project/Data/model.csv')
 dfModelDataAll.show()
@@ -37,4 +38,18 @@ testErr = labelsAndPredictions.filter(lambda (v, p): v != p).count() / float(tes
 print('Test Error = ' + str(testErr))
 print('Learned classification forest model:')
 print(model.toDebugString())
-#print(model)
+
+#Code for Spark Evaluation Matrix
+
+metrics = MulticlassMetrics(labelsAndPredictions)
+# Overall statistics
+precision = metrics.precision()
+recall = metrics.recall()
+f1Score = metrics.fMeasure()
+confusionMatrx = metrics.confusionMatrix()
+
+print("All Evaluation Measures Stats")
+print("Confusion Matix = %s" % confusionMatrx)
+print("Precision = %s" % precision)
+print("Recall = %s" % recall)
+print("F1 Score = %s" % f1Score)
