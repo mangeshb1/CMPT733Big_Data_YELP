@@ -50,8 +50,7 @@ joined_df.registerTempTable("joined_df")
 
 #sql_text2 = "SELECT *, ROW_NUMBER() over (PARTITION BY yelp_id order by review_usefullness desc) AS RowNo FROM joined_df"
 
-#sql_text3 = "SELECT rs.Field1, rs.Field2, FROM (SELECT Field1, Field2, RowNumber() over (Partition BY yelp_id ORDER BY review_usefullness DESC ) AS Rank FROM joined_df ) rs WHERE Rank <= 10"
-
+#sql_text3 = "SELECT rs.Field1, rs.Field2, FROM (SELECT Field1, Field2, RowNumber() over (Partition BY yelp_id ORDER BY 
 
 yelp_ids = sqlContext.sql("select distinct yelp_id from joined_df").rdd\
     .map(lambda r: r[0]).collect()
